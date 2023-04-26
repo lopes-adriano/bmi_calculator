@@ -1,9 +1,10 @@
 import 'package:bmi_calculator/re_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'styles.dart';
 import 'icon_content.dart';
 
-const cardColor = Color(0xFF1D1E33);
+enum Gender { male, female }
 
 class InputPage extends StatefulWidget {
   const InputPage({super.key});
@@ -13,6 +14,9 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  Gender? selectedGender;
+  int height = 180;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,14 +24,22 @@ class _InputPageState extends State<InputPage> {
         title: const Text('CALCULADORA IMC'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Row(
-              children: const [
+              children: [
                 Expanded(
                   child: ReCard(
-                    color: cardColor,
-                    child: IconContent(
+                    onPress: () {
+                      setState(() {
+                        selectedGender = Gender.male;
+                      });
+                    },
+                    color: selectedGender == Gender.male
+                        ? kActiveCardColor
+                        : kInactiveCardColor,
+                    child: const IconContent(
                       icon: Icon(
                         FontAwesomeIcons.mars,
                         size: 60,
@@ -38,8 +50,15 @@ class _InputPageState extends State<InputPage> {
                 ),
                 Expanded(
                   child: ReCard(
-                    color: cardColor,
-                    child: IconContent(
+                    onPress: () {
+                      setState(() {
+                        selectedGender = Gender.female;
+                      });
+                    },
+                    color: selectedGender == Gender.female
+                        ? kActiveCardColor
+                        : kInactiveCardColor,
+                    child: const IconContent(
                         icon: Icon(
                           FontAwesomeIcons.venus,
                           size: 60,
@@ -50,9 +69,54 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          const Expanded(
+          Expanded(
             child: ReCard(
-              color: cardColor,
+              color: kActiveCardColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'ALTURA',
+                    style: kLabelTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        height.toString(),
+                        style: kNumberTextStyle,
+                      ),
+                      const Text(
+                        'cm',
+                        style: kLabelTextStyle,
+                      ),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      trackHeight: kTrackerHeight,
+                      activeTrackColor: kActiveSliderColor,
+                      inactiveTrackColor: kInactiveSliderColor,
+                      thumbColor: kThumbColor,
+                      overlayColor: kOverlayColor,
+                      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: kThumbRadius),
+                      overlayShape: const RoundSliderOverlayShape(overlayRadius: kOverlayRadius),
+                    ),
+                    child: Slider(
+                      value: height.toDouble(),
+                      onChanged: (double newValue) {
+                        setState(() {
+                          height = newValue.toInt();
+                        });
+                      },
+                      min: kMinHeight,
+                      max: kMaxHeight,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -60,12 +124,12 @@ class _InputPageState extends State<InputPage> {
               children: const [
                 Expanded(
                   child: ReCard(
-                    color: cardColor,
+                    color: kActiveCardColor,
                   ),
                 ),
                 Expanded(
                   child: ReCard(
-                    color: cardColor,
+                    color: kActiveCardColor,
                   ),
                 ),
               ],
@@ -73,13 +137,13 @@ class _InputPageState extends State<InputPage> {
           ),
           Container(
             width: double.infinity,
-            height: 60,
+            height: kBottomContainerHeight,
             margin: const EdgeInsets.only(top: 10),
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFEB1555)),
-              child: const Text('Calcular IMC'),
+                  backgroundColor: kBottomContainerColor),
+              child: const Text('Calcular IMC', style: kBottomContainerText,),
             ),
           ),
         ],
