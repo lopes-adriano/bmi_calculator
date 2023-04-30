@@ -1,8 +1,9 @@
-import 'package:bmi_calculator/re_card.dart';
+import 'package:bmi_calculator/components/icon_content.dart';
+import 'package:bmi_calculator/components/re_card.dart';
+import 'package:bmi_calculator/pages/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'styles.dart';
-import 'icon_content.dart';
+import 'package:bmi_calculator/styles.dart';
 
 enum Gender { male, female }
 
@@ -15,7 +16,9 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender? selectedGender;
-  int height = 180;
+  int height = 170;
+  int weight = 50;
+  int age = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -101,8 +104,10 @@ class _InputPageState extends State<InputPage> {
                       inactiveTrackColor: kInactiveSliderColor,
                       thumbColor: kThumbColor,
                       overlayColor: kOverlayColor,
-                      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: kThumbRadius),
-                      overlayShape: const RoundSliderOverlayShape(overlayRadius: kOverlayRadius),
+                      thumbShape: const RoundSliderThumbShape(
+                          enabledThumbRadius: kThumbRadius),
+                      overlayShape: const RoundSliderOverlayShape(
+                          overlayRadius: kOverlayRadius),
                     ),
                     child: Slider(
                       value: height.toDouble(),
@@ -121,30 +126,100 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: Row(
-              children: const [
+              children: [
                 Expanded(
                   child: ReCard(
                     color: kActiveCardColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'PESO',
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: kNumberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () {
+                                setState(() {
+                                  (weight > 10) ? weight-- : null;
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPressed: () {
+                                setState(() {
+                                  (weight < 300) ? weight++ : null;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ReCard(
                     color: kActiveCardColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'IDADE',
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kNumberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () {
+                                setState(() {
+                                  (age > 1) ? age-- : null;
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPressed: () {
+                                setState(() {
+                                  (age < 100) ? age++ : null;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           ),
-          Container(
-            width: double.infinity,
-            height: kBottomContainerHeight,
-            margin: const EdgeInsets.only(top: 10),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: kBottomContainerColor),
-              child: const Text('Calcular IMC', style: kBottomContainerText,),
-            ),
+          BottomButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const ResultsPage()));
+            },
+            text: 'Calcular IMC',
           ),
         ],
       ),
