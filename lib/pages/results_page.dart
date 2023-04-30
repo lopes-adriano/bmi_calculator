@@ -18,7 +18,7 @@ class ResultsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: const Text('CALCULADORA IMC')),
+        title: const Text('CALCULADORA IMC'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
