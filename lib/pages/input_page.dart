@@ -1,5 +1,8 @@
+import 'package:bmi_calculator/calculator.dart';
+import 'package:bmi_calculator/components/bottom_button.dart';
 import 'package:bmi_calculator/components/icon_content.dart';
 import 'package:bmi_calculator/components/re_card.dart';
+import 'package:bmi_calculator/components/round_icon_button.dart';
 import 'package:bmi_calculator/pages/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,7 +20,7 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender? selectedGender;
   int height = 170;
-  int weight = 50;
+  int weight = 60;
   int age = 18;
 
   @override
@@ -216,8 +219,16 @@ class _InputPageState extends State<InputPage> {
           ),
           BottomButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ResultsPage()));
+              Calculator calc = Calculator(height, weight);
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>  ResultsPage(
+                            imc: calc.calculateIMC(),
+                            result: calc.getResult(),
+                            interpretation: calc.getInterpretation(),
+                          )));
             },
             text: 'Calcular IMC',
           ),

@@ -1,9 +1,18 @@
+import 'package:bmi_calculator/components/bottom_button.dart';
 import 'package:bmi_calculator/components/re_card.dart';
 import 'package:bmi_calculator/styles.dart';
 import 'package:flutter/material.dart';
 
 class ResultsPage extends StatelessWidget {
-  const ResultsPage({super.key});
+  const ResultsPage(
+      {super.key,
+      required this.imc,
+      required this.result,
+      required this.interpretation});
+
+  final String imc;
+  final String result;
+  final String interpretation;
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +23,14 @@ class ResultsPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Expanded(
-            child: Text(
-              'Seu Resultado',
-              style: kTitleTextStyle,
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              alignment: Alignment.bottomLeft,
+              child: const Text(
+                'Seu Resultado',
+                style: kTitleTextStyle,
+              ),
             ),
           ),
           Expanded(
@@ -27,13 +40,18 @@ class ResultsPage extends StatelessWidget {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    Text('NORMAL', style: kResultTextStyle),
-                    Text('20', style: kIMCTextStyle),
-                    Text('Descrição', style: kDescTextStyle),
+                  children: [
+                    Text(result, style: kResultTextStyle),
+                    Text(imc, style: kIMCTextStyle),
+                    Text(interpretation, style: kDescTextStyle, textAlign: TextAlign.center,),
                   ]),
             ),
           ),
+          BottomButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              text: 'Voltar')
         ],
       ),
     );

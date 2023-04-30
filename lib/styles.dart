@@ -17,7 +17,7 @@ const kTitleTextStyle = TextStyle(fontSize: 40, fontWeight: FontWeight.bold);
 const kResultTextStyle = TextStyle(
     color: Color(0xFF24D876), fontSize: 22, fontWeight: FontWeight.bold);
 const kIMCTextStyle = TextStyle(fontSize: 80, fontWeight: FontWeight.bold);
-const kDescTextStyle = TextStyle(fontSize: 22);
+const kDescTextStyle = TextStyle(fontSize: 20);
 
 //Tamanhos
 const kBottomContainerHeight = 60.0;
