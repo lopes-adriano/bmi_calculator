@@ -1,3 +1,5 @@
 # bmi_calculator
 
-A new Flutter project.
+Projeto do curso de Flutter da London App Brewery.
+
+<img src="/preview.png" alt="App Preview" title="Preview">
